@@ -92,8 +92,9 @@ void minStackPush(MinStack* obj, int x) {
 }
 
 void minStackPop(MinStack* obj) {
+	int top = StackTop(&(obj->_st));
 	StackPop(&(obj->_st));
-	if (StackTop(&(obj->_st)) == StackTop(&(obj->_minst)))
+	if (top == StackTop(&(obj->_minst)))
 	{
 		StackPop(&(obj->_minst));
 	}
