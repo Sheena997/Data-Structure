@@ -92,6 +92,11 @@ void SeqListErase(SeqList* psl, size_t pos)
 void SeqListRemove(SeqList* psl, SLDataType x)
 {
 	assert(psl);
+	/*
+	int pos = SeqListFind(ps, x);
+	if (pos != -1)
+		SeqListErase(ps, pos);
+	*/
 	for (int i = 0; i < psl->size; i++)
 	{
 		if (psl->array[i] == x)
