@@ -65,7 +65,7 @@ int SeqListFind(SeqList* psl, SLDataType x)
 	for (int i = 0; i < psl->size; i++)
 	{
 		if (psl->array[i] == x)
-			return 1;
+			return i;
 	}
 	return -1;
 }
@@ -74,7 +74,7 @@ void SeqListInsert(SeqList* psl, size_t pos, SLDataType x)
 	assert(pos >= 0 && pos <= psl->size - 1);
 	psl->size++;
 	CheckCapacity(psl);
-	for (int i = psl->size - 1; i <= pos; --i)
+	for (int i = psl->size - 1; i > pos; --i)
 	{
 		psl->array[i] = psl->array[i - 1];
 	}
@@ -83,7 +83,7 @@ void SeqListInsert(SeqList* psl, size_t pos, SLDataType x)
 void SeqListErase(SeqList* psl, size_t pos)
 {
 	assert(pos >= 0 && pos <= psl->size - 1);
-	for (int i = pos; i <= psl->size - 1; ++i)
+	for (int i = pos; i < psl->size - 1; ++i)
 	{
 		psl->array[i] = psl->array[i + 1];
 	}
@@ -119,7 +119,7 @@ void SeqListPrint(SeqList* psl)
 	}
 	printf("\n");
 }
-// À©Õ¹ÃæÊÔÌâÊµÏÖ
+// æ‰©å±•é¢è¯•é¢˜å®ç°
 void Swap(int* p, int* q)
 {
 	int tmp = *p;
@@ -157,7 +157,7 @@ int SeqListBinaryFind(SeqList* psl, SLDataType x)
 	}
 	return -1;
 }
-// ±¾ÌâÒªÇó£ºÊ±¼ä¸´ÔÓ¶È£ºO(N) ¿Õ¼ä¸´ÔÓ¶È O(1)
+// æœ¬é¢˜è¦æ±‚ï¼šæ—¶é—´å¤æ‚åº¦ï¼šO(N) ç©ºé—´å¤æ‚åº¦ O(1)
 void SeqListRemoveAll(SeqList* psl, SLDataType x)
 {
 	assert(psl);
