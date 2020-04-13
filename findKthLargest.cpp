@@ -18,9 +18,8 @@
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        //升序小根堆
+        //升序建小根堆
 	priority_queue<int, vector<int>, greater<int>> pq;
-
         
         for(int& e : nums)
         {
