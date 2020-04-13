@@ -1,25 +1,3 @@
-/*
-106. ´ÓÖĞĞòÓëºóĞò±éÀúĞòÁĞ¹¹Ôì¶ş²æÊ÷
-¸ù¾İÒ»¿ÃÊ÷µÄÖĞĞò±éÀúÓëºóĞò±éÀú¹¹Ôì¶ş²æÊ÷¡£
-
-×¢Òâ:
-Äã¿ÉÒÔ¼ÙÉèÊ÷ÖĞÃ»ÓĞÖØ¸´µÄÔªËØ¡£
-
-ÀıÈç£¬¸ø³ö
-
-ÖĞĞò±éÀú inorder = [9,3,15,20,7]
-ºóĞò±éÀú postorder = [9,15,7,20,3]
-·µ»ØÈçÏÂµÄ¶ş²æÊ÷£º
-
-    3
-   / \
-  9  20
-    /  \
-   15   7
-   
-À´Ô´£ºLeetCode
-Á´½Ó£ºhttps://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
-*/
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -29,10 +7,13 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
- 
- //ºóĞò±éÀúÏÈÊÇ±éÀúµ½ÓÒ×ÓÊ÷µÄ¸ù£¬ËùÒÔÏÈ½øÓÒ×ÓÊ÷ÔÙ½ø×ó×ÓÊ÷
+
+//ååºéå†å…ˆæ˜¯éå†åˆ°å³å­æ ‘çš„æ ¹ï¼Œæ‰€ä»¥å…ˆè¿›å³å­æ ‘å†è¿›å·¦å­æ ‘
+//åŠ äº†mapä¸å†æ¯æ¬¡éƒ½è¦éå†ï¼Œè€Œæ˜¯æ¯æ¬¡äºŒåˆ†éå†ï¼Œä»¥ç©ºé—´æ¢æ—¶é—´
+
 class Solution {
 public:
+    map<int, int> mp;
     TreeNode* _buildTree(vector<int>& inorder, vector<int>& postorder, int& posti, int inbegin, int inend)
     {
         if(inbegin > inend)
@@ -41,6 +22,7 @@ public:
         int rootVal = postorder[posti]; 
         TreeNode* root = new TreeNode(rootVal);
         
+        /*
         int rooti = inbegin;
         while(rooti <= inend)
         {
@@ -48,7 +30,8 @@ public:
                 break;
             ++rooti;
         }
-        
+        */
+        int rooti = mp[rootVal];
         
         if(rooti + 1 <= inend)
             root -> right = _buildTree(inorder, postorder, --posti, rooti + 1, inend);
@@ -63,6 +46,9 @@ public:
     }
     
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        for(int i = 0; i < inorder.size(); ++i)
+            mp.insert(pair<int, int>(inorder[i], i));
+        
         int posti = postorder.size() - 1, inbegin = 0, inend = inorder.size() - 1;
         
         return _buildTree(inorder, postorder, posti, inbegin, inend);
