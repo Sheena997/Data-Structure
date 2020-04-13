@@ -1,22 +1,3 @@
-/*
-105. ´ÓÇ°ĞòÓëÖĞĞò±éÀúĞòÁĞ¹¹Ôì¶ş²æÊ÷
-¸ù¾İÒ»¿ÃÊ÷µÄÇ°Ğò±éÀúÓëÖĞĞò±éÀú¹¹Ôì¶ş²æÊ÷¡£
-×¢Òâ:
-Äã¿ÉÒÔ¼ÙÉèÊ÷ÖĞÃ»ÓĞÖØ¸´µÄÔªËØ¡£
-ÀıÈç£¬¸ø³ö
-Ç°Ğò±éÀú preorder = [3,9,20,15,7]
-ÖĞĞò±éÀú inorder = [9,3,15,20,7]
-·µ»ØÈçÏÂµÄ¶ş²æÊ÷£º
-
-    3
-   / \
-  9  20
-    /  \
-   15   7
-
-À´Ô´£ºLeetCode
-Á´½Ó£ºhttps://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
-*/
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -26,8 +7,10 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+//åŠ äº†mapä¹‹åä¸éœ€æ¯æ¬¡éƒ½éå†ä¸€éï¼Œè€Œæ˜¯äºŒåˆ†æŸ¥æ‰¾ï¼Œä»¥ç©ºé—´æ¢æ—¶é—´
 class Solution {
 public:
+    map<int, int> mp;
     TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder, int& prei, int inbegin, int inend)
     {
         if(inbegin > inend)
@@ -36,7 +19,8 @@ public:
         int rootVal = preorder[prei];
         TreeNode* root = new TreeNode(rootVal);
         
-        //ÔÚÖĞĞòÖĞÕÒ¸ùÎ»ÖÃ
+        //åœ¨ä¸­åºä¸­æ‰¾æ ¹ä½ç½®
+        /*
         int inRoot = inbegin;
         while(inRoot <= inend)
         {
@@ -44,9 +28,9 @@ public:
                 break;
             ++inRoot;
         }
+        */
+        int inRoot = mp[rootVal];
         
-		// [inbegin, inRooti-1] inRooti [inRooti+1, inend] ×ó×ÓÊ÷µÄÖĞĞò[inbegin, inRooti-1] ÓÒ×ÓÊ÷µÄÖĞĞò[inRooti+1, inend]
-        // Èç¹ûÖĞĞò×óÇø¼ä´æÔÚÔòµİ¹é´´½¨×ó×ÓÊ÷£¬Èç¹ûÖĞĞò×óÇø¼ä²»´æÔÚ£¬Ôò×ó×ÓÊ÷ÊÇ¿ÕÊ÷
         if(inbegin <= inRoot - 1)
            root -> left =  _buildTree(preorder, inorder, ++prei, inbegin, inRoot - 1);
         else 
@@ -60,6 +44,10 @@ public:
     }
     
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        for(int i = 0; i < inorder.size(); ++i)
+            mp.insert(pair<int, int>(inorder[i], i));
+    
+        
         int prei = 0, inbegin = 0, inend = inorder.size() - 1;
         
         return _buildTree(preorder, inorder, prei, inbegin, inend); 
