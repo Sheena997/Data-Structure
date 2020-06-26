@@ -40,7 +40,7 @@
  */
 class Solution {
 public:
-    void _pathSum(TreeNode* root, int sum, vector<vector<int>>& res, vector<int>& ret, int& count)
+    void _pathSum(TreeNode* root, int sum, vector<vector<int>>& res, vector<int>& ret, int count)
     {
         if(root == NULL)
             return;
