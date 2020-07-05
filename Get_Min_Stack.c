@@ -114,3 +114,70 @@ void minStackFree(MinStack* obj) {
 	free(obj);
 }
 
+
+
+/*
+来源：牛客网
+链接：https://www.nowcoder.com/questionTerminal/a4d17eb2e9884359839f8ec559043761
+*/
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+typedef int STDataType;
+class MinStack
+{
+public:
+    MinStack()
+    {}
+    ~MinStack()
+    {}
+    void MinPush(STDataType x)
+    {
+        _st.push(x);
+        if(_minst.empty() || _minst.top() >= x)
+            _minst.push(x);
+    }
+    void MinPop()
+    {
+        if(_minst.top() == _st.top())
+            _minst.pop();
+        _st.pop();
+    }
+    STDataType GetMin()
+    {
+        return _minst.top();
+    }
+    STDataType GetTop()
+    {
+        return _st.top();
+    }
+private:
+    stack<int> _minst;
+    stack<int> _st;
+};
+
+int main()
+{
+    int op = 0, x = 0;
+    MinStack ms;
+    while(cin >> op)
+    {
+        switch(op)
+        {
+            case 0:
+                cout << ms.GetMin() << endl;
+                break;
+            case 1:
+                cin >> x;
+                ms.MinPush(x);
+                break;
+            case 2:
+                cout << ms.GetTop() << endl;
+                ms.MinPop();
+                break;
+        }
+    }
+    return 0;
+}
