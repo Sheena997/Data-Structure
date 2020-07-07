@@ -33,15 +33,15 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        queue<int> s1, s2;
+        queue<int> q1, q2;
         while(l1)
         {
-            s1.push(l1->val);
+            q1.push(l1->val);
             l1 = l1->next;
         }
         while(l2)
         {
-            s2.push(l2->val);
+            q2.push(l2->val);
             l2 = l2->next;
         }
         
@@ -49,18 +49,18 @@ public:
         head = tail = new ListNode;
         int ret = 0;
         
-        while(!s1.empty() || !s2.empty() || ret > 0)
+        while(!q1.empty() || !q2.empty() || ret > 0)
         {
             int sum = ret;
-            if(!s1.empty())
+            if(!q1.empty())
             {
-                sum += s1.front();
-                s1.pop();
+                sum += q1.front();
+                q1.pop();
             }
-            if(!s2.empty())
+            if(!q2.empty())
             {
-                sum += s2.front();
-                s2.pop();
+                sum += q2.front();
+                q2.pop();
             }
             
             tail->next = new ListNode(sum % 10);
