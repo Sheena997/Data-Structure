@@ -4,35 +4,38 @@
 树包括 s 的一个节点和这个节点
 的所有子孙。s 也可以看做它自身
 的一棵子树*/
-
 /**
-* Definition for a binary tree node.
-* struct TreeNode {
-*     int val;
-*     struct TreeNode *left;
-*     struct TreeNode *right;
-* };
-*/
-
-bool isSametree(struct TreeNode* t1, struct TreeNode* t2)
-{
-	if (t1 == NULL && t2 == NULL)
-		return true;
-	if (t1 == NULL || t2 == NULL)
-		return false;
-	if (t1->val != t2->val)
-		return false;
-	return isSametree(t1->left, t2->left) && isSametree(t1->right, t2->right);
-}
-bool isSubtree(struct TreeNode* s, struct TreeNode* t) {
-	if (s == NULL)
-		return false;
-	if (s->val == t->val)
-	{
-		if (isSametree(s, t))
-			return true;
-	}
-
-	return isSubtree(s->left, t) || isSubtree(s->right, t);
-}
-
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool _isSubStructure(TreeNode* A, TreeNode* B)
+    {
+        if(B == nullptr)
+            return true;
+        if(A == nullptr)
+            return false;
+        
+        if(A->val != B->val)
+            return false;
+        
+        return _isSubStructure(A->left, B->left) && _isSubStructure(A->right, B->right);
+    }
+    bool isSubStructure(TreeNode* A, TreeNode* B) {
+        if(B == nullptr || A == nullptr)
+            return false;
+        
+        if(A->val == B->val)
+            if(_isSubStructure(A, B))
+                return true;
+        
+        return isSubStructure(A->left, B) || isSubStructure(A->right, B);
+    }
+};
+};
